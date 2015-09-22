@@ -32,7 +32,7 @@ And now, let's run emp apps to see what apps we have running in our Empire envir
 $ emp apps
 ```
 
-Great, no apps, and we can verify that the ECS cluster has no running services:
+Great, no apps, and we can verify that the ECS cluster has no running services other than the Empire API:
 
 ```console
 $ aws ecs list-clusters
