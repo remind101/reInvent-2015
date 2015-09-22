@@ -178,7 +178,17 @@ Let's go ahead and create an app and deploy the latest tag of our Docker image.
 
 ```console
 $ emp create app
+```
+
+As I mentioned before, apps are internal to the VPC by default, but we can expose it publicly by adding a domain to the app.
+
+```
 $ emp domain-add app -a app
+```
+
+And now we'll deploy the Docker image:
+
+```
 $ emp deploy ejholmes/app:latest
 ```
 
@@ -269,7 +279,7 @@ $ emp set NAME=reInvent -a app
 After we reload the browser, you'll notice that nothing has changed. This is because ECS is now spinning up new versions of our application, and then waiting for connections to drain from the existing tasks. It will take about 1-2 minutes for the new version of our web process to start up.
 
 ```console
-$ emp ps
+$ emp ps -a app
 ```
 
 And there we go.
