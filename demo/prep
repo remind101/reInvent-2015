@@ -1,4 +1,4 @@
 #!/bin/bash
 
-rm -rf app
+eval $(docker-machine env default)
 docker pull golang
