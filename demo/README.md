@@ -83,10 +83,10 @@ $ emp ps -a www
 
 Now that looks better.
 
-Ok. So it's launch day and we hit #1 on HN. We're getting slammed and it doesn't help that Wile E. Coyote is trying to DoS us.
+Ok. So it's launch day and we hit #1 on HN. We're getting slammed and it doesn't help that the Road Runner is trying to DoS us.
 
 ```console
-$ ./wile $ELB
+$ ./beepbeep $ELB
 ```
 
 Let's go ahead and scale up our web process to account for the new load.
