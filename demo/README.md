@@ -83,6 +83,38 @@ $ emp ps -a www
 
 Now that looks better.
 
+Wait a sec...turns out I just got a text from the CEO and he says they're going to provide Dropping Anvils as a Service and needs the app running right now for the Hacker News announcement.
+
+Turns out I already have an application built, and we just need to deploy it and then expose the API through our nginx application.
+
+_Walk through anvils app_
+
+```console
+$ docker build -t acmeinc/anvils .
+$ docker run -p 8080:80 acmeinc/anvils
+$ curl http://$(docker-machine ip default):8080/drop -d '{"Target": "Road Runner"}' -i
+```
+
+```console
+$ docker push acmeinc/anvils:latest
+$ emp deploy acmeinc/anvils
+```
+
+And now let's mount this API in our nginx application:
+
+```nginx
+    location /api {
+        rewrite /api/(.*) /$1 break;
+        proxy_pass "http://anvils.empire";
+    }
+```
+
+```console
+$ make && make push
+$ emp deploy acmeinc/www
+$ curl $ELB/api/drop -d '{"Target": "Road Runner"}' -i
+```
+
 Ok. So it's launch day and we hit #1 on HN. We're getting slammed and it doesn't help that the Road Runner is trying to DoS us.
 
 ```console

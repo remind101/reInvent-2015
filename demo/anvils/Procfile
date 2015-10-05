@@ -1,0 +1,2 @@
+web: anvils web
+worker: anvils worker
