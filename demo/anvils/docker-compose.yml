@@ -1,0 +1,11 @@
+anvils:
+  build: ./
+  command: ./bin/start
+  links:
+    - "redis"
+  environment:
+    REDIS_URL: "redis://redis:6379"
+  ports:
+    - "8080:80"
+redis:
+  image: redis

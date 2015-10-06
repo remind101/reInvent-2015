@@ -1,0 +1,18 @@
+{
+	"ImportPath": "github.com/remind101/reInvent-2015/demo/anvils",
+	"GoVersion": "go1.4.2",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "gopkg.in/bsm/ratelimit.v1",
+			"Rev": "bda20d5067a03094fc6762f7ead53027afac5f28"
+		},
+		{
+			"ImportPath": "gopkg.in/redis.v3",
+			"Comment": "v3.2.10",
+			"Rev": "eef3fd78ef0f78e8406339c27fd46c6af93f24ba"
+		}
+	]
+}

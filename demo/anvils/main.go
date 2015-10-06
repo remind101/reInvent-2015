@@ -9,20 +9,16 @@ import (
 	"time"
 )
 
+var queue *Queue
+
 func init() {
 	flag.Usage = usage
+	queue = newQueue(os.Getenv("REDIS_URL"))
 }
 
 type DropRequest struct {
 	Target string
 }
-
-type Queue struct{}
-
-func (q *Queue) Push(DropRequest) {}
-func (q *Queue) Pop() DropRequest { return DropRequest{} }
-
-var queue = new(Queue)
 
 func runWeb() {
 	port := os.Getenv("PORT")
