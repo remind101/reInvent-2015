@@ -37,7 +37,7 @@ _Walk through www_
 ```console
 $ docker build -t acmeinc/www .
 $ docker run -p 8080:8080 acmeinc/www
-$ open http://$(docker-machine ip default)
+$ open http://$(docker-machine ip default):8080
 ```
 
 So let's go ahead and deploy this to Empire. The only pre-requisite is that we have the Docker image hosted on a Docker registry somewhere, so let's go ahead and push this docker image.
@@ -91,7 +91,7 @@ _Walk through anvils app_
 
 ```console
 $ docker build -t acmeinc/anvils .
-$ docker run -p 8080:80 acmeinc/anvils
+$ docker run -p 8080:80 acmeinc/anvils anvils web
 $ curl http://$(docker-machine ip default):8080/drop -d '{"Target": "Road Runner"}' -i
 ```
 
@@ -115,7 +115,14 @@ $ emp deploy acmeinc/www
 $ curl $ELB/api/drop -d '{"Target": "Road Runner"}' -i
 ```
 
-Ok. So it's launch day and we hit #1 on HN. We're getting slammed and it doesn't help that the Road Runner is trying to DoS us.
+We can see that we're running the web process for the new anvils app, but we also want to be running the worker process as well, so let's scale that up to 1:
+
+```console
+$ emp ps -a anvils
+$ emp scale worker=1 -a anvils
+```
+
+Ok, we're ready. So it's launch day and we hit #1 on HN. We're getting slammed and it doesn't help that the Road Runner is trying to DoS us.
 
 ```console
 $ ./beepbeep $ELB

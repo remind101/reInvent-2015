@@ -1,4 +1,7 @@
 #!/bin/bash
 
+echo "* Restart Empire API"
+echo "* Login to AWS console"
 eval $(docker-machine env default)
-docker pull golang
+open http://github.com/remind101/empire
+open http://github.com/remind101/emp
