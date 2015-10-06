@@ -100,6 +100,13 @@ $ docker push acmeinc/anvils:latest
 $ emp deploy acmeinc/anvils
 ```
 
+We can see that we're running the web process for the new anvils app, but we also want to be running the worker process as well, so let's scale that up to 1:
+
+```console
+$ emp ps -a anvils
+$ emp scale worker=1 -a anvils
+```
+
 And now let's mount this API in our nginx application:
 
 ```nginx
@@ -115,12 +122,6 @@ $ emp deploy acmeinc/www
 $ curl $ELB/api/drop -d '{"Target": "Road Runner"}' -i
 ```
 
-We can see that we're running the web process for the new anvils app, but we also want to be running the worker process as well, so let's scale that up to 1:
-
-```console
-$ emp ps -a anvils
-$ emp scale worker=1 -a anvils
-```
 
 Ok, we're ready. So it's launch day and we hit #1 on HN. We're getting slammed and it doesn't help that the Road Runner is trying to DoS us.
 

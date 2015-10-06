@@ -3,6 +3,7 @@
 echo "* Restart Empire API"
 echo "* Login to AWS console"
 echo "* Run git checkout ."
+echo "* Close slack"
 eval $(docker-machine env default)
 open http://github.com/remind101/empire
 open http://github.com/remind101/emp
