@@ -40,6 +40,8 @@ $ docker run -p 8080:8080 acmeinc/www
 $ open http://$(docker-machine ip default):8080
 ```
 
+**CREATE THE APP BEFORE DEPLOYING**
+
 So let's go ahead and deploy this to Empire. The only pre-requisite is that we have the Docker image hosted on a Docker registry somewhere, so let's go ahead and push this docker image.
 
 ```console
