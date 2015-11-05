@@ -1,15 +1,28 @@
-So I'm going to go ahead and tell you the story of a company you may have heard of before - ACME Inc. ACME Inc has been around for years, but what you may not know is that just this year they decided it was time to get online. Even more  importantly, they figured it'd be best to come online for the first time today! True story.
+# Intro
 
-That's right, they figured all sorts of cool stuff was going to be announced at re:Invent, so they contacted me and asked that I bring them into the cloud.
+Thanks Ben. So I'm gonna go ahead and jump into a quick demo.
 
-After gathering some requirements it became pretty obvious that while they wanted a web presence, they weren't yet sure what they wanted to do with it. Still, it's important that every company have a webpage, so I figured we might as well make a placeholder.
+I will show you how to set up an Empire environment and how to build and deploy a simple docker image.
+
+And hopefully Murphy is good to us today.
+
+Ok. Is everybody can see ok? Is the font big enough?
+
+# Story
+
+So I'm gonna go ahead and tell you the story of a company you may have heard of before - ACME Inc. ACME Inc has been around for years, but what you may not know is that they just decided it was time to get online. More  importantly, they have asked us to help them achieve it with Empire.
+
+So, after gathering some requirements it became pretty obvious that while they wanted a web presence, they weren't yet sure what they wanted to do with it. So we figured we will just make a placeholder website for them.
 
 # Setup
 
-Before using Empire. We have to do two things.
+Before using Empire, we need to set it up, of course. What we need to do is:
 
-1. We need to provision an ECS cluster and install Empire.
-2. We also need to install the Empire CLI.
+1. Install Empire within an ECS cluster.
+2. And install the Empire CLI.
+
+We provide a demo Cloudformation stack for Empire. It' a very easy and fast way to try it out.
+IF you were to run Empire in production though, you would want to build your own stack.
 
 After we've setup Empire, we just need to install the Empire CLI. So I'll go ahead and do that:
 
@@ -30,25 +43,29 @@ And now, let's run emp apps to see what apps we have running in our Empire envir
 $ emp apps
 ```
 
-Great! We have an empty Empire environment all ready for Acme Inc's applications. Let's go ahead and build a placeholder site for Acme Inc.
+Great! We have an empty Empire environment all ready for Acme Inc's applications. **We can verify that by going to the ECS console**.
+
+# Build the placeholder website
+
+Ok. So I'm gonna go ahead and deploy the placeholder website for Acme, Inc. I'ts pretty simple, I already built it beforehand.
 
 _Walk through www_
 
 ```console
-$ docker build -t acmeinc/www .
-$ docker run -p 8080:8080 acmeinc/www
+$ docker build -t acmeinc/acme .
+$ docker run -p 8080:8080 acmeinc/acme
 $ open http://$(docker-machine ip default):8080
 ```
 
-**CREATE THE APP BEFORE DEPLOYING**
-
 So let's go ahead and deploy this to Empire. The only pre-requisite is that we have the Docker image hosted on a Docker registry somewhere, so let's go ahead and push this docker image.
 
+**CREATE THE APP BEFORE DEPLOYING**
+
 ```console
-$ docker push acmeinc/www
+$ docker push acmeinc/acme
 $ emp create www
 $ emp domain-add acmeinc.com -a www
-$ emp deploy acmeinc/www
+$ emp deploy acmeinc/acme
 ```
 
 So that created an ECS service and attached an ELB to our new application.
@@ -66,9 +83,9 @@ Great! We're up and running. But it looks like I made a typo and called the comp
 _Fix typo, build and deploy_
 
 ```console
-$ docker build -t acmeinc/www .
-$ docker push acmeinc/www
-$ emp deploy 
+$ docker build -t acmeinc/acme .
+$ docker push acmeinc/acme
+$ emp deploy
 ```
 
 When we deploy a new version, we'll see that Empire created a new release for us:
@@ -85,54 +102,4 @@ $ emp ps -a www
 
 Now that looks better.
 
-Wait a sec...turns out I just got a text from the CEO and he says they're going to provide Dropping Anvils as a Service and needs the app running right now for the Hacker News announcement.
-
-Turns out I already have an application built, and we just need to deploy it and then expose the API through our nginx application.
-
-_Walk through anvils app_
-
-```console
-$ docker build -t acmeinc/anvils .
-$ docker run -p 8080:80 acmeinc/anvils anvils web
-$ curl http://$(docker-machine ip default):8080/drop -d '{"Target": "Road Runner"}' -i
-```
-
-```console
-$ docker push acmeinc/anvils:latest
-$ emp deploy acmeinc/anvils
-```
-
-We can see that we're running the web process for the new anvils app, but we also want to be running the worker process as well, so let's scale that up to 1:
-
-```console
-$ emp ps -a anvils
-$ emp scale worker=1 -a anvils
-```
-
-And now let's mount this API in our nginx application:
-
-```nginx
-    location /api {
-        rewrite /api/(.*) /$1 break;
-        proxy_pass "http://anvils.empire";
-    }
-```
-
-```console
-$ make && make push
-$ emp deploy acmeinc/www
-$ curl $ELB/api/drop -d '{"Target": "Road Runner"}' -i
-```
-
-
-Ok, we're ready. So it's launch day and we hit #1 on HN. We're getting slammed and it doesn't help that the Road Runner is trying to DoS us.
-
-```console
-$ ./beepbeep $ELB
-```
-
-Let's go ahead and scale up our web process to account for the new load.
-
-```console
-$ emp scale web=5 -a www
-```
+# No. 1 on Hackernews!
