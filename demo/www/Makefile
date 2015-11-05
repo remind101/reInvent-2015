@@ -1,7 +1,7 @@
 .PHONY: build
 
 build:
-	docker build -t acmeinc/www .
+	docker build -t acmeinc/acme .
 
 push:
-	docker push acmeinc/www:latest
+	docker push acmeinc/acme:latest
