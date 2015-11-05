@@ -10,7 +10,7 @@ Ok. Is everybody can see ok? Is the font big enough?
 
 # Story
 
-So I'm gonna go ahead and tell you the story of a company you may have heard of before - ACME Inc. ACME Inc has been around for years, but what you may not know is that they just decided it was time to get online. More  importantly, they have asked us to help them achieve it with Empire.
+So I'm gonna go ahead and tell you a little story. It's the story of a company you may have heard of before - ACME Inc. ACME Inc has been around for years, but what you may not know is that they just decided it was time to get online. More  importantly, they have asked us to help them achieve it with Empire.
 
 So, after gathering some requirements it became pretty obvious that while they wanted a web presence, they weren't yet sure what they wanted to do with it. So we figured we will just make a placeholder website for them.
 
